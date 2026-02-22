@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator wydatków</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="welcome">
+        <p class="welcome-text"></p>
+    </div>
+    <div class="kind-of-expenses">
+        <h2>Rodzaje wydatków</h2>
+        <label for="expenses-name">Nazwa wydatku</label>
+        <input type="text" id="expenses-name" placeholder="Wprowadź nazwę wydatku"><br>
+        <label for="expenses-amount">Kwota wydatku</label>
+        <input type="number" id="expenses-amount" placeholder="Wprowadź kwotę wydatku"><br>
+        <button id="close-kind-of-expenses">Zamknij</button>
+    </div>
+    <div class="calculator">
+        <h>Kalkulator wydatków</h2>
+    <table>
+        <tr>
+            <td><label for="income">Miesięczny dochód:</label></td>
+            <td><input type="number" id="income" placeholder="Wprowadź dochód"></td>
+        </tr>
+        <tr>
+            <td><label for="expenses">Miesięczne wydatki:</label></td>
+            <td><button id="add-expense">Dodaj rodzaj wydatków</button></td>
+        </tr>
+    </div>
+</body>
+</html>
