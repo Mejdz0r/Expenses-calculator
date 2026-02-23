@@ -8,19 +8,26 @@
     <script src="script.js" defer></script>
 </head>
 <body>
+<!-- ogarnac responsywnosc strony-->
     <div class="welcome">
         <p class="welcome-text"></p>
     </div>
-    <div class="kind-of-expenses">
+    <div id="adding-comm">
+    </div>
+        
+    </div>
+    <div class="kind-of-expenses" >
         <h2>Rodzaje wydatków</h2>
         <label for="expenses-name">Nazwa wydatku</label>
         <input type="text" id="expenses-name" placeholder="Wprowadź nazwę wydatku"><br>
         <label for="expenses-amount">Kwota wydatku</label>
         <input type="number" id="expenses-amount" placeholder="Wprowadź kwotę wydatku"><br>
+        <!--zrobic-->
+        <button id="add-expense-button">Dodaj</button>
         <button id="close-kind-of-expenses">Zamknij</button>
     </div>
-    <div class="calculator">
-        <h>Kalkulator wydatków</h2>
+    <div class="calculator" hidden>
+        <h2>Kalkulator wydatków</h2>
     <table>
         <tr>
             <td><label for="income">Miesięczny dochód:</label></td>
@@ -28,9 +35,10 @@
         </tr>
         <tr>
             <td><label for="expenses">Miesięczne wydatki:</label></td>
-            <td><button id="add-expense">Dodaj rodzaj wydatków</button></td>
+            <td><button id="add-expense-menu">Dodaj rodzaj wydatków</button></td>
         </tr>
+        </table>
+    </div>
     </div>
 </body>
-
 </html>
