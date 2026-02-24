@@ -8,11 +8,12 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-<!-- ogarnac responsywnosc strony-->
+<!--TODO: ogarnac responsywnosc strony-->
+ <!--TODO: dodawanie do listy wydatkow-->
     <div class="welcome">
         <p class="welcome-text"></p>
     </div>
-    <div id="adding-comm">
+    <div class="adding-comm">
     </div>
         
     </div>
@@ -22,10 +23,12 @@
         <input type="text" id="expenses-name" placeholder="Wprowadź nazwę wydatku"><br>
         <label for="expenses-amount">Kwota wydatku</label>
         <input type="number" id="expenses-amount" placeholder="Wprowadź kwotę wydatku"><br>
-        <!--zrobic-->
         <button id="add-expense-button">Dodaj</button>
         <button id="close-kind-of-expenses">Zamknij</button>
     </div>
+    <div class="expenses-list" hidden>
+        <h2>Lista wydatków</h2>
+        </div>
     <div class="calculator" hidden>
         <h2>Kalkulator wydatków</h2>
     <table>
