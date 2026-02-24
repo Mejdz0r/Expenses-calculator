@@ -5,13 +5,17 @@ const kindOfExpensesDIV = document.querySelector('.kind-of-expenses');
 const addExpenses = document.querySelector('#add-expense-menu');
 const closeKindOfExpenses = document.querySelector('#close-kind-of-expenses');
 const incomeInput = document.querySelector('#income');
-const addingComm = document.querySelector('#adding-comm');
+const addingComm = document.querySelector('.adding-comm');
 const expensesNameInput = document.querySelector('#expenses-name');
 const expensesAmountInput = document.querySelector('#expenses-amount');
+const addExpenseButton = document.querySelector('#add-expense-button');
+const expensesList = document.querySelector('.expenses-list');
 let nameOfExpense = [];
 let amountOfExpense = [];
 let i=0;
 let j=0;
+let NameStatus = false;
+let AmountStatus = false;
 //wejsciowy komunikat
 function welcome() {
     const date = new Date();
@@ -23,6 +27,7 @@ function welcome() {
 function clearWelcome() {
     welcomeDIV.classList.add('hidden');
     calculator.classList.add('visable');
+    expensesList.hidden = false;
 }
 function clearAddingComm() {
     addingComm.classList.add('hidden');
@@ -30,48 +35,55 @@ function clearAddingComm() {
 function addingCommVisible() {
     addingComm.classList.remove('hidden');
 }
+function showMessage(text, type) {
+    const messageDiv = document.createElement('div');
+    messageDiv.textContent = text;
+    messageDiv.classList.add(type);
+    messageDiv.textContent = text;
+    addingComm.appendChild(messageDiv);
+    setTimeout(() => {
+        messageDiv.remove();
+    }, 2000);}
 //pokazanie formularza do dodawania wydatków
 function kindOfExpenses() {
     const incomeValue = parseFloat(incomeInput.value);
     if (isNaN(incomeValue) || incomeValue <= 0) {
-        addingCommVisible();
-//todo: zmienic na diva z komunikatem o błędzie
+        
        // alert('Proszę wprowadzić poprawny dochód przed dodaniem wydatków');
-       addingComm.innerHTML = '<div class="not-added">Proszę wprowadzić poprawny dochód przed dodaniem wydatków</div>';
-        setTimeout(clearAddingComm, 2000);
+       showMessage('Proszę wprowadzić poprawny dochód przed dodaniem wydatków', 'not-added');
         return;
     }else{
-//todo: dodac infrmacje o wejsciu 
-        addingCommVisible();
-    addingComm.innerHTML = '<div class="added">Możesz teraz dodać swoje wydatki</div>';
+        
+    showMessage('Możesz teraz dodać swoje wydatki', 'added');
     kindOfExpensesDIV.classList.add('kind-of-expenses-container');
     calculator.classList.remove('visable');
-setTimeout(clearAddingComm, 2000);}
+    expensesList.classList.add('hidden');
     }
-/* FIX!!!!!!!!!
+}
 function addNameOfExpense() {
     if (expensesNameInput.value.trim() === '') {
-        addingCommVisible();
-        addingComm.innerHTML = '<div class="not-added">Nazwa wydatku nie może być pusta</div>';
-        setTimeout(clearAddingComm, 2000);
+        
+        showMessage('Nazwa nie może być pusta', 'not-added');
+        
         return;
     }else{
-        nameOfExpense[i]+= expensesNameInput.value.trim();
+        nameOfExpense[i]= expensesNameInput.value.trim();
         i++;
+        NameStatus = true;
     }
-} */
-/*  FIX!!!!!!!!!
+} 
+ 
 function addAmountOfExpense() {
     if(isNaN(parseFloat(expensesAmountInput.value)) || parseFloat(expensesAmountInput.value) <= 0) {    
-        addingCommVisible();
-        addingComm.innerHTML = '<div class="not-added">Kwota wydatku musi być liczbą dodatnią</div>';
-        setTimeout(clearAddingComm, 2000);
+        
+        showMessage('Kwota wydatku musi być liczbą dodatnią', 'not-added');
         return;
     }else{
-        amountOfExpense[j]+= parseFloat(expensesAmountInput.value);
+        amountOfExpense[j]= parseFloat(expensesAmountInput.value);
         j++;
+        AmountStatus = true;
     }
-} */
+} 
 //wywołanie funkcji wejscia 
 welcome();
 //ustawienie czasu po którym zniknie komunikat i pojawi się kalkulator
@@ -82,4 +94,14 @@ addExpenses.addEventListener('click', kindOfExpenses);
 closeKindOfExpenses.addEventListener('click', () => {
     kindOfExpensesDIV.classList.remove('kind-of-expenses-container');
     calculator.classList.add('visable');
+    expensesList.classList.remove('hidden');
+});
+addExpenseButton.addEventListener('click', () => {
+addNameOfExpense();
+addAmountOfExpense();
+
+if(NameStatus && AmountStatus){
+showMessage(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`, 'added');
+}
+//alert(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`);
 });
