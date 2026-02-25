@@ -1,1 +1,115 @@
+html,body{
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  margin: 0;                /* Usuwa domyślne marginesy przeglądarki */
+  height: 100vh;           /* Ustawia wysokość na 100% widoku ekranu */
+  display: flex;           /* Włącza elastyczny model pudełkowy */
+  justify-content: center; /* Środkuje w poziomie */
+  align-items: center;     /* Środkuje w pionie */
+}
+
+.welcome {
+  /* Tutaj stylizujesz swojego diva */
+  width: 40%;
+  height: 20%;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: black;
+  text-align: center;
+  font-size: larger;
+  }
+
+.calculator{
+  width: 40%;
+  height: 20%;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: black;
+  text-align: center;
+  font-size: larger;
+}
+.kind-of-expenses{
+      display: none;
+}
+.kind-of-expenses-container{
+    display: block;
+  /* Tutaj stylizujesz swojego diva */
+  width: 40%;
+  height: 20%;
+  padding: 20px;
+  background-color: #f0f0f0;
+  border: 1px solid black;
+  border-radius: 10px;
+  color: black;
+  text-align: center;
+  font-size: large;
+}
+.hidden{
+    display: none;
+}
+.visable{
+    display: block;
+}
+.added{
+  display: flex;
+  color: lawngreen;
+  background-color: green;
+  min-width: 200px;
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid yellowgreen;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.not-added{
+  display: flex;
+  color: white;
+  background-color: red;
+  min-width: 200px;
+  padding: 15px;
+  border-radius: 10px;  
+  border: 1px solid darkred;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-sizing: border-box;
+  
+}
+div > h2{
+    text-align: center;
+}
+.expenses-list{
+  position: fixed;
+  left: 0;
+    width: 20%;
+    height: 80%;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+    text-align: center;
+    font-size: larger;
+    overflow-y: auto;
+}
+
+.adding-comm {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: flex-end;
+  z-index: 9999; /* WAŻNE */
+}
 
