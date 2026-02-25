@@ -10,6 +10,8 @@ const expensesNameInput = document.querySelector('#expenses-name');
 const expensesAmountInput = document.querySelector('#expenses-amount');
 const addExpenseButton = document.querySelector('#add-expense-button');
 const expensesList = document.querySelector('.expenses-list');
+const expensesListContainer = document.querySelector('.expenses-list-container');
+const incomeValue = parseFloat(incomeInput.value);
 let nameOfExpense = [];
 let amountOfExpense = [];
 let i=0;
@@ -84,6 +86,15 @@ function addAmountOfExpense() {
         AmountStatus = true;
     }
 } 
+function clearExpenseInputs() {
+    expensesNameInput.value = '';
+    expensesAmountInput.value = '';
+}
+function listDisplay(){
+    const expenseItem = document.createElement('div');
+    expenseItem.textContent = `Wydatek: ${nameOfExpense[i-1]} - Kwota: ${amountOfExpense[j-1]} zł`;
+    expensesListContainer.appendChild(expenseItem);
+}
 //wywołanie funkcji wejscia 
 welcome();
 //ustawienie czasu po którym zniknie komunikat i pojawi się kalkulator
@@ -102,6 +113,10 @@ addAmountOfExpense();
 
 if(NameStatus && AmountStatus){
 showMessage(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`, 'added');
+clearExpenseInputs();
+NameStatus = false;
+AmountStatus = false;
+listDisplay();
 }
 //alert(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`);
 });
