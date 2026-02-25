@@ -99,7 +99,9 @@ div > h2{
     color: black;
     text-align: center;
     font-size: larger;
+    overflow-y: auto;
 }
+
 .adding-comm {
   position: fixed;
   top: 20px;
@@ -110,4 +112,3 @@ div > h2{
   align-items: flex-end;
   z-index: 9999; /* WAŻNE */
 }
-
