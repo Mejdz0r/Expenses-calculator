@@ -62,7 +62,7 @@ function kindOfExpenses() {
         return;
     }else{
     balance = incomeValue;
-   // alert(`Twój dochód to: ${balance} zł`);
+     alert(`Twój dochód to: ${balance} zł`);
     showMessage('Możesz teraz dodać swoje wydatki', 'added');
     kindOfExpensesDIV.classList.add('kind-of-expenses-container');
     calculator.classList.remove('visable');
@@ -120,7 +120,6 @@ addAmountOfExpense();
 
 if(NameStatus && AmountStatus){
 showMessage(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`, 'added');
-alert(incomeValueOpperations);
 clearExpenseInputs();
 NameStatus = false;
 AmountStatus = false;
