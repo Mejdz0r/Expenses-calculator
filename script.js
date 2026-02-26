@@ -11,13 +11,19 @@ const expensesAmountInput = document.querySelector('#expenses-amount');
 const addExpenseButton = document.querySelector('#add-expense-button');
 const expensesList = document.querySelector('.expenses-list');
 const expensesListContainer = document.querySelector('.expenses-list-container');
-const incomeValue = parseFloat(incomeInput.value);
+let balance = 0;
 let nameOfExpense = [];
-let amountOfExpense = [];
+let amountOfExpense = []; 
 let i=0;
 let j=0;
 let NameStatus = false;
 let AmountStatus = false;
+//TODO: funkcja do obliczania pozostałego budżetu po dodaniu wydatków, aktualizująca wyświetlanie pozostałego budżetu i ewentualnie pokazująca komunikat o przekroczeniu budżetu.
+function remainingBalance() {
+}
+//TODO: funkcja do obliczania procentowego udziału każdego wydatku w stosunku do dochodu, aktualizująca wyświetlanie tych informacji przy każdym dodaniu wydatku.
+function budgetPercentage() {
+}
 //wejsciowy komunikat
 function welcome() {
     const date = new Date();
@@ -55,7 +61,8 @@ function kindOfExpenses() {
        showMessage('Proszę wprowadzić poprawny dochód przed dodaniem wydatków', 'not-added');
         return;
     }else{
-        
+    balance = incomeValue;
+   // alert(`Twój dochód to: ${balance} zł`);
     showMessage('Możesz teraz dodać swoje wydatki', 'added');
     kindOfExpensesDIV.classList.add('kind-of-expenses-container');
     calculator.classList.remove('visable');
@@ -113,6 +120,7 @@ addAmountOfExpense();
 
 if(NameStatus && AmountStatus){
 showMessage(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`, 'added');
+alert(incomeValueOpperations);
 clearExpenseInputs();
 NameStatus = false;
 AmountStatus = false;
@@ -120,3 +128,4 @@ listDisplay();
 }
 //alert(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`);
 });
+
