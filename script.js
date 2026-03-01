@@ -12,15 +12,18 @@ const addExpenseButton = document.querySelector('#add-expense-button');
 const expensesList = document.querySelector('.expenses-list');
 const expensesListContainer = document.querySelector('.expenses-list-container');
 let balance = 0;
-let nameOfExpense = [];
-let amountOfExpense = []; 
-let i=0;
-let j=0;
-let NameStatus = false;
-let AmountStatus = false;
-//TODO: funkcja do obliczania pozostałego budżetu po dodaniu wydatków, aktualizująca wyświetlanie pozostałego budżetu i ewentualnie pokazująca komunikat o przekroczeniu budżetu.
+let expenses = [];
+//let nameOfExpense = [];
+//let amountOfExpense = []; 
+let remaining = 0;
 function remainingBalance() {
-}
+     remaining = balance;
+    for(let expense of expenses){
+        remaining -= expense.amount;}
+        return remaining;
+    }
+  // alert(`Pozostały budżet: ${remaining} zł`);
+
 //TODO: funkcja do obliczania procentowego udziału każdego wydatku w stosunku do dochodu, aktualizująca wyświetlanie tych informacji przy każdym dodaniu wydatku.
 function budgetPercentage() {
 }
@@ -62,13 +65,14 @@ function kindOfExpenses() {
         return;
     }else{
     balance = incomeValue;
-     alert(`Twój dochód to: ${balance} zł`);
+     //alert(`Twój dochód to: ${balance} zł`);
     showMessage('Możesz teraz dodać swoje wydatki', 'added');
     kindOfExpensesDIV.classList.add('kind-of-expenses-container');
     calculator.classList.remove('visable');
     expensesList.classList.add('hidden');
     }
 }
+/*
 function addNameOfExpense() {
     if (expensesNameInput.value.trim() === '') {
         
@@ -92,16 +96,23 @@ function addAmountOfExpense() {
         j++;
         AmountStatus = true;
     }
-} 
+} */
 function clearExpenseInputs() {
     expensesNameInput.value = '';
     expensesAmountInput.value = '';
 }
 function listDisplay(){
     const expenseItem = document.createElement('div');
-    expenseItem.textContent = `Wydatek: ${nameOfExpense[i-1]} - Kwota: ${amountOfExpense[j-1]} zł`;
+
+    const lastExpense = expenses[expenses.length - 1];
+
+    expenseItem.textContent =
+        `Wydatek: ${lastExpense.name} - 
+         Kwota: ${lastExpense.amount} zł`;
+
     expensesListContainer.appendChild(expenseItem);
 }
+    
 //wywołanie funkcji wejscia 
 welcome();
 //ustawienie czasu po którym zniknie komunikat i pojawi się kalkulator
@@ -115,16 +126,35 @@ closeKindOfExpenses.addEventListener('click', () => {
     expensesList.classList.remove('hidden');
 });
 addExpenseButton.addEventListener('click', () => {
-addNameOfExpense();
-addAmountOfExpense();
 
-if(NameStatus && AmountStatus){
-showMessage(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`, 'added');
-clearExpenseInputs();
-NameStatus = false;
-AmountStatus = false;
-listDisplay();
-}
-//alert(`Dodano wydatek: ${nameOfExpense[i-1]} o kwocie ${amountOfExpense[j-1]} zł`);
+    const name = expensesNameInput.value.trim();
+    const amount = parseFloat(expensesAmountInput.value);
+
+    if (name === '') {
+        showMessage('Nazwa nie może być pusta', 'not-added');
+        return;
+    }
+
+    if (isNaN(amount) || amount <= 0) {
+        showMessage('Kwota musi być dodatnia', 'not-added');
+        return;
+    }
+
+    //  sprawdzamy czy dodanie przekroczy budżet
+    const predictedRemaining = remainingBalance() - amount;
+
+    if (predictedRemaining < 0) {
+        showMessage('Przekroczono budżet!', 'not-added');
+        return; // ⬅ NIE dodajemy do tablicy
+    }
+
+    // dopiero teraz zapisujemy
+    expenses.push({ 
+        name:name,
+        amount:amount });
+    showMessage(`Dodano wydatek. Pozostało ${predictedRemaining} zł`, 'added');
+
+    clearExpenseInputs();
+    listDisplay();
 });
 
