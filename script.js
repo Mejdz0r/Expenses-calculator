@@ -10,7 +10,9 @@ const expensesNameInput = document.querySelector('#expenses-name');
 const expensesAmountInput = document.querySelector('#expenses-amount');
 const addExpenseButton = document.querySelector('#add-expense-button');
 const expensesList = document.querySelector('.expenses-list');
-const expensesListContainer = document.querySelector('.expenses-list-container');
+const expensesListContainer = document.querySelector('#expenses-list-container');
+const percentageResult = document.querySelector('#percentage-result');
+const percentageContainer = document.querySelector('.percentage');
 let balance = 0;
 let expenses = [];
 //let nameOfExpense = [];
@@ -26,7 +28,19 @@ function remainingBalance() {
 
 //TODO: funkcja do obliczania procentowego udziału każdego wydatku w stosunku do dochodu, aktualizująca wyświetlanie tych informacji przy każdym dodaniu wydatku.
 function budgetPercentage() {
-}
+    balance = parseFloat(incomeInput.value);
+    if (isNaN(balance) || balance <= 0) {
+        percentageResult.textContent = "Nieprawidłowy dochód";
+        return;
+    }else{
+        percentageResult.innerHTML = '';
+    let percentages = [];
+for (let i = 0; i < expenses.length; i++) {
+    percentages[i] = (expenses[i].amount / balance * 100).toFixed(2);
+
+    percentageResult.innerHTML += 
+        `Procentowy udział wydatku "${expenses[i].name}" w dochodzie: ${percentages[i]}%<br>`;
+}}}
 //wejsciowy komunikat
 function welcome() {
     const date = new Date();
@@ -38,7 +52,8 @@ function welcome() {
 function clearWelcome() {
     welcomeDIV.classList.add('hidden');
     calculator.classList.add('visable');
-    expensesList.hidden = false;
+    percentageContainer.classList.add('visable');
+    expensesList.classList.add('visable');
 }
 function clearAddingComm() {
     addingComm.classList.add('hidden');
@@ -69,7 +84,8 @@ function kindOfExpenses() {
     showMessage('Możesz teraz dodać swoje wydatki', 'added');
     kindOfExpensesDIV.classList.add('kind-of-expenses-container');
     calculator.classList.remove('visable');
-    expensesList.classList.add('hidden');
+    expensesList.classList.remove('visable');
+    percentageContainer.classList.remove('visable');
     }
 }
 /*
@@ -102,15 +118,14 @@ function clearExpenseInputs() {
     expensesAmountInput.value = '';
 }
 function listDisplay(){
-    const expenseItem = document.createElement('div');
+    
 
     const lastExpense = expenses[expenses.length - 1];
 
-    expenseItem.textContent =
-        `Wydatek: ${lastExpense.name} - 
-         Kwota: ${lastExpense.amount} zł`;
+    expensesListContainer.innerHTML +=
+        `Wydatek: ${lastExpense.name} - Kwota: ${lastExpense.amount} zł<br>`;
 
-    expensesListContainer.appendChild(expenseItem);
+    
 }
     
 //wywołanie funkcji wejscia 
@@ -123,7 +138,8 @@ addExpenses.addEventListener('click', kindOfExpenses);
 closeKindOfExpenses.addEventListener('click', () => {
     kindOfExpensesDIV.classList.remove('kind-of-expenses-container');
     calculator.classList.add('visable');
-    expensesList.classList.remove('hidden');
+    expensesList.classList.add('visable');
+    percentageContainer.classList.add('visable');
 });
 addExpenseButton.addEventListener('click', () => {
 
@@ -156,5 +172,6 @@ addExpenseButton.addEventListener('click', () => {
 
     clearExpenseInputs();
     listDisplay();
+    budgetPercentage();
 });
 
