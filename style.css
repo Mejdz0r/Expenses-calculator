@@ -54,7 +54,8 @@ body {
     display: none;
 }
 .visable{
-    display: block;
+    display: flex;
+    flex-direction: column;
 }
 .added{
   display: flex;
@@ -89,7 +90,7 @@ div > h2{
 }
 .expenses-list{
   position: fixed;
-  left: 0;
+  left: 10px;
     width: 20%;
     height: 80%;
     padding: 20px;
@@ -99,7 +100,8 @@ div > h2{
     color: black;
     text-align: center;
     font-size: larger;
-    overflow-y: auto;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .adding-comm {
@@ -111,4 +113,40 @@ div > h2{
   gap: 10px;
   align-items: flex-end;
   z-index: 9999; /* WAŻNE */
+}
+.percentage{
+  position: fixed;
+  right: 10px;
+    width: 20%;
+    height: 80%;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid black;
+    border-radius: 10px;
+    color: black;
+    text-align: center;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+#percentage-result{
+    text-align: left;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;           /* Zajmij całą dostępną przestrzeń pod H2 */
+    overflow-y: auto;  /* Tylko tutaj pojawia się scrollbar */
+    margin-top: 10px;
+    padding-right: 5px; 
+    font-size: small;
+}
+#expenses-list-container{
+  text-align: left;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    flex: 1;           /* Zajmij całą dostępną przestrzeń pod H2 */
+    overflow-y: auto;  /* Tylko tutaj pojawia się scrollbar */
+    margin-top: 10px;
+    padding-right: 5px;
+    font-size: small;
 }
