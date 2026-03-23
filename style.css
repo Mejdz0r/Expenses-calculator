@@ -44,8 +44,6 @@ body {
   height: 20%;
   padding: 20px;
   background-color: #f0f0f0;
-  border: 1px solid black;
-  border-radius: 10px;
   color: black;
   text-align: center;
   font-size: large;
@@ -130,9 +128,7 @@ div > h2{
 }
 #percentage-result{
     text-align: left;
-    border: 1px solid black;
     padding: 10px;
-    border-radius: 10px;
     flex: 1;           /* Zajmij całą dostępną przestrzeń pod H2 */
     overflow-y: auto;  /* Tylko tutaj pojawia się scrollbar */
     margin-top: 10px;
@@ -141,9 +137,7 @@ div > h2{
 }
 #expenses-list-container{
   text-align: left;
-    border: 1px solid black;
     padding: 10px;
-    border-radius: 10px;
     flex: 1;           /* Zajmij całą dostępną przestrzeń pod H2 */
     overflow-y: auto;  /* Tylko tutaj pojawia się scrollbar */
     margin-top: 10px;
