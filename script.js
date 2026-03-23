@@ -13,8 +13,10 @@ const expensesList = document.querySelector('.expenses-list');
 const expensesListContainer = document.querySelector('#expenses-list-container');
 const percentageResult = document.querySelector('#percentage-result');
 const percentageContainer = document.querySelector('.percentage');
+const chartContainer = document.querySelector('.chart-container');
 let balance = 0;
 let expenses = [];
+let myChart=null;
 //let nameOfExpense = [];
 //let amountOfExpense = []; 
 let remaining = 0;
@@ -27,6 +29,47 @@ function remainingBalance() {
   // alert(`Pozostały budżet: ${remaining} zł`);
 
 //TODO: funkcja do obliczania procentowego udziału każdego wydatku w stosunku do dochodu, aktualizująca wyświetlanie tych informacji przy każdym dodaniu wydatku.
+
+// 1. Tę funkcję wywołaj TYLKO RAZ (np. przy starcie strony)
+function initChart() {
+    const canvas = document.createElement('canvas');
+    canvas.classList.add('chart');
+    canvas.id = 'expensesChart';
+    chartContainer.appendChild(canvas);
+
+    const ctx = canvas.getContext('2d');
+    myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [],
+            datasets: [{
+                data: [],
+                backgroundColor: []
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+        }
+            }
+        }
+    });
+}
+
+// 2. Tę funkcję wywołuj po każdym dodaniu wydatku
+function updateChartData() {
+    if (!myChart) return; // Zabezpieczenie, jeśli wykres nie istnieje
+
+    // Podmieniamy dane w istniejącym obiekcie
+    myChart.data.labels = expenses.map(expense => expense.name);
+    myChart.data.datasets[0].data = expenses.map(exp => exp.amount);
+    myChart.data.datasets[0].backgroundColor = expenses.map((_, i) => `hsl(${i * 60}, 70%, 60%)`);
+
+    // Odświeżamy wykres płynną animacją
+}
 function budgetPercentage() {
     balance = parseFloat(incomeInput.value);
     if (isNaN(balance) || balance <= 0) {
@@ -130,6 +173,7 @@ function listDisplay(){
     
 //wywołanie funkcji wejscia 
 welcome();
+initChart();
 //ustawienie czasu po którym zniknie komunikat i pojawi się kalkulator
 setTimeout(clearWelcome, 1000);
 //dodanie event listenerów do przycisków do otwierania formularza do dodawania wydatków.
@@ -173,7 +217,6 @@ addExpenseButton.addEventListener('click', () => {
     clearExpenseInputs();
     listDisplay();
     budgetPercentage();
+    updateChartData();
 });
-
-
 
