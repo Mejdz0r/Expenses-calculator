@@ -44,7 +44,10 @@ function initChart() {
             labels: [],
             datasets: [{
                 data: [],
-                backgroundColor: []
+                backgroundColor: [],
+                borderWidth: 0,         // Usuwa białą ramkę między wycinkami
+            hoverOffset: 0,        // Wyłącza "odskakiwanie" wycinka po najechaniu
+            spacing: 0
             }]
         },
         options: {
@@ -53,7 +56,18 @@ function initChart() {
             plugins: {
                 legend: {
                     display: false
+        },
+        // Wewnątrz plugins w initChart:
+        tooltip: {
+            callbacks: {
+                label: (ctx) => {
+                    const income = parseFloat(incomeInput.value) || 0;
+                    const pct = ((ctx.raw / income) * 100).toFixed(2);
+                    return ` ${pct}%`;
         }
+    }
+}
+
             }
         }
     });
@@ -61,15 +75,40 @@ function initChart() {
 
 // 2. Tę funkcję wywołuj po każdym dodaniu wydatku
 function updateChartData() {
-    if (!myChart) return; // Zabezpieczenie, jeśli wykres nie istnieje
+    if (!myChart) return [];
 
-    // Podmieniamy dane w istniejącym obiekcie
-    myChart.data.labels = expenses.map(expense => expense.name);
-    myChart.data.datasets[0].data = expenses.map(exp => exp.amount);
-    myChart.data.datasets[0].backgroundColor = expenses.map((_, i) => `hsl(${i * 60}, 70%, 60%)`);
+    const income = parseFloat(incomeInput.value) || 0;
+    const totalExpenses = expenses.reduce((sum, exp) => sum + exp.amount, 0);
+    const remaining = income - totalExpenses;
 
-    // Odświeżamy wykres płynną animacją
-}
+    // Generujemy kolory dla istniejących wydatków
+    const expenseColors = expenses.map((_, i) => `hsl(${i * 60}, 70%, 60%)`);
+    
+    let chartData = expenses.map(exp => exp.amount);
+    let chartLabels = expenses.map(exp => exp.name);
+    let chartColors = [...expenseColors];
+
+    // Logika "szarego pola":
+    // Jeśli nie ma wydatków, a jest dochód -> 100% szare
+    // Jeśli są wydatki, ale została reszta -> dodaj szary plasterek
+    if (income > 0 && remaining > 0) {
+        chartData.push(remaining);
+        chartLabels.push("Nieprzydzielone");
+        chartColors.push("#d3d3d3"); 
+    } else if (income <= 0 && expenses.length === 0) {
+        // Stan całkowicie początkowy (brak dochodu i wydatków)
+        chartData.push(1);
+        chartLabels.push("Wprowadź dochód");
+        chartColors.push("#ebebeb");
+    }
+
+    myChart.data.labels = chartLabels;
+    myChart.data.datasets[0].data = chartData;
+    myChart.data.datasets[0].backgroundColor = chartColors;
+    
+
+    return chartColors; 
+} 
 function budgetPercentage() {
     balance = parseFloat(incomeInput.value);
     if (isNaN(balance) || balance <= 0) {
@@ -78,11 +117,17 @@ function budgetPercentage() {
     }else{
         percentageResult.innerHTML = '';
     let percentages = [];
+    const currentCollors= updateChartData();
 for (let i = 0; i < expenses.length; i++) {
+    const color = currentCollors[i];
     percentages[i] = (expenses[i].amount / balance * 100).toFixed(2);
-
-    percentageResult.innerHTML += 
-        `Procentowy udział wydatku "${expenses[i].name}" w dochodzie: ${percentages[i]}%<br>`;
+    percentageResult.innerHTML += `
+    <div class="expense-item">
+        <span class="expense-dot" style="background-color: ${currentCollors[i]};"></span>
+        <span class="expense-info">
+            "${expenses[i].name}"to: <strong>${percentages[i]}%</strong>
+        </span>
+    </div>`;
 }}}
 //wejsciowy komunikat
 function welcome() {
